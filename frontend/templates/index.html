@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+    <button class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon"></i>
+    </button>
     <div class="container">
         <header>
             <h1><i class="fas fa-tachometer-alt"></i> SpeedSpector</h1>
@@ -19,12 +22,12 @@
         <main>
             <!-- قسم اختبار السرعة -->
             <section class="speed-test-section">
-                <h2><i class="fas fa-wifi"></i> اختبار السرعة</h2>
-                <button id="testButton" class="primary-button">
-                    <span class="button-text">ابدأ اختبار السرعة</span>
+                <h2><i class="fas fa-wifi"></i> اختبار سرعة الإنترنت</h2>
+                <button id="speedTestButton" class="primary-button">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span class="button-text">اختبار السرعة</span>
                     <span class="loading-spinner"></span>
                 </button>
-                
                 <div class="results">
                     <div class="result-card">
                         <i class="fas fa-download"></i>
@@ -52,20 +55,90 @@
             <!-- قسم معلومات النظام -->
             <section class="system-info-section">
                 <h2><i class="fas fa-microchip"></i> معلومات النظام</h2>
+                <button id="systemTestButton" class="primary-button">
+                    <i class="fas fa-microchip"></i>
+                    <span class="button-text">فحص النظام</span>
+                    <span class="loading-spinner"></span>
+                </button>
                 <div class="info-grid">
+                    <!-- معلومات المعالج -->
                     <div class="info-card">
-                        <h3>المعالج</h3>
+                        <h3><i class="fas fa-microchip"></i> المعالج</h3>
+                        <p class="system-detail" id="cpuModel">-</p>
                         <div class="progress-container">
                             <div id="cpuProgress" class="progress-bar"></div>
                             <span id="cpuUsage" class="progress-value">0%</span>
                         </div>
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <span class="label">الأنوية:</span>
+                                <span id="cpuCores" class="value">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">التردد:</span>
+                                <span id="cpuSpeed" class="value">-</span>
+                            </div>
+                        </div>
                     </div>
                     
+                    <!-- معلومات الذاكرة -->
                     <div class="info-card">
-                        <h3>الذاكرة</h3>
+                        <h3><i class="fas fa-memory"></i> الذاكرة</h3>
                         <div class="progress-container">
                             <div id="memoryProgress" class="progress-bar"></div>
                             <span id="memoryUsage" class="progress-value">0%</span>
+                        </div>
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <span class="label">الذاكرة الكلية:</span>
+                                <span id="totalMemory" class="value">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">المستخدمة:</span>
+                                <span id="usedMemory" class="value">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">المتاحة:</span>
+                                <span id="availableMemory" class="value">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- معلومات نظام التشغيل -->
+                    <div class="info-card">
+                        <h3><i class="fas fa-desktop"></i> نظام التشغيل</h3>
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <span class="label">النظام:</span>
+                                <span id="osName" class="value">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">الإصدار:</span>
+                                <span id="osVersion" class="value">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">المعمارية:</span>
+                                <span id="osArch" class="value">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">وقت التشغيل:</span>
+                                <span id="uptime" class="value">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- معلومات التطبيق -->
+                    <div class="info-card">
+                        <h3><i class="fas fa-code"></i> معلومات التطبيق</h3>
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <span class="label">إصدار Python:</span>
+                                <span id="pythonVersion" class="value">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">المنطقة الزمنية:</span>
+                                <span id="timezone" class="value">-</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -74,6 +147,11 @@
             <!-- قسم معلومات الشبكة -->
             <section class="network-info-section">
                 <h2><i class="fas fa-network-wired"></i> معلومات الشبكة</h2>
+                <button id="networkTestButton" class="primary-button">
+                    <i class="fas fa-network-wired"></i>
+                    <span class="button-text">فحص الشبكة</span>
+                    <span class="loading-spinner"></span>
+                </button>
                 <div class="network-stats">
                     <div class="stat-card">
                         <i class="fas fa-laptop"></i>
@@ -86,6 +164,27 @@
                         <span id="localIp" class="value">-</span>
                     </div>
                 </div>
+            </section>
+
+            <!-- قسم معلومات الأقراص -->
+            <section class="disk-info-section">
+                <h2><i class="fas fa-hdd"></i> معلومات الأقراص</h2>
+                <button id="diskTestButton" class="primary-button">
+                    <i class="fas fa-hdd"></i>
+                    <span class="button-text">فحص الأقراص</span>
+                    <span class="loading-spinner"></span>
+                </button>
+                <div class="disk-stats">
+                    <div class="disk-grid" id="diskInfo">
+                        <!-- سيتم ملء هذا القسم ديناميكياً عبر JavaScript -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- قسم مخطط الأداء -->
+            <section class="performance-section">
+                <h2><i class="fas fa-chart-line"></i> مخطط الأداء</h2>
+                <canvas id="performanceChart"></canvas>
             </section>
         </main>
 
