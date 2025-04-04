@@ -1,0 +1,5 @@
+fastapi>=0.68.0
+uvicorn>=0.15.0
+speedtest-cli>=2.1.3
+jinja2>=3.0.0
+psutil>=5.8.0
